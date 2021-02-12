@@ -29,7 +29,7 @@ jobs:
         go-version: 1.15
 
     - name: Build API
-      run: make api_up
+      run: go build -v cmd/api.go
       
   build_generator:
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
         go-version: 1.15
 
     - name: Build Generator
-      run: make generator_api
+      run: go run -v internal/generator/server.go
       
   build_bot:
     runs-on: ubuntu-latest
@@ -55,4 +55,4 @@ jobs:
         go-version: 1.15
      
     - name: Build Bot
-      run: make bot_api
+      run: go run internal/bot/subscriber.go
