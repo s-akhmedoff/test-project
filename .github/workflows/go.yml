@@ -21,17 +21,38 @@ jobs:
   build_api:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+
     - name: Build API
       run: make api_up
       
   build_generator:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+      
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+
     - name: Build Generator
       run: make generator_api
       
   build_bot:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+       
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+     
     - name: Build Bot
       run: make bot_api
