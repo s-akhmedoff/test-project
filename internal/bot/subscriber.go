@@ -97,8 +97,12 @@ func main() {
 			}
 			if current != nil {
 				log.Print(current)
-				bot.Send(tgbotapi.NewMessage(int64(-1001332343159), string(current.Body)))
-
+				_, err := bot.Send(tgbotapi.NewMessage(int64(-1001332343159), string(current.Body)))
+				if err != nil {
+					current.Nack(false, true)
+				} else {
+					current.Ack(false)
+				}
 			}
 		}
 	}()
