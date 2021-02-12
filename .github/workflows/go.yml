@@ -8,51 +8,43 @@ on:
 
 jobs:
 
-  env_up:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.15
-
   build_api:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.15
 
     - name: Build API
-      run: go build -v cmd/api.go
-      
+      run: go build -v cmd/main.go
+
+
   build_generator:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.15
 
-    - name: Build Generator
-      run: go run -v internal/generator/server.go
-      
+    - name: Build API
+      run: go build -v internal/generator/server.go
+
+
   build_bot:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-       
+
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.15
-     
-    - name: Build Bot
-      run: go run internal/bot/subscriber.go
+
+    - name: Build API
+      run: go build -v internal/bot/subscriber.go
