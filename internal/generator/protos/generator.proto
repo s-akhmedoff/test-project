@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package genproto;
+
+service GeneratorService {
+    rpc GenerateAndSend (GSRequest) returns (GSResponse) {}
+}
+
+message GSRequest {
+    uint32     number      = 1;
+    string     priority    = 2;
+}
+
+message GSResponse {
+    string     response    = 1;
+}
