@@ -6,6 +6,7 @@ import (
 	"test-project/utils"
 )
 
+//InitBot - ...
 func InitBot() (bot *tgbotapi.BotAPI) {
 	bot, err := tgbotapi.NewBotAPI("1672264352:AAGznTbLlxmLu6xJxYjzPEjU_0raes7gfWE")
 	utils.FailOnError(err, "failed to connect to bot")

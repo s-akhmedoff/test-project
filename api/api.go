@@ -2,7 +2,6 @@ package api
 
 import (
 	"google.golang.org/grpc"
-	_ "test-project/api/docs"
 	"test-project/api/genproto"
 	v1 "test-project/api/handlers/v1"
 	"test-project/utils"
