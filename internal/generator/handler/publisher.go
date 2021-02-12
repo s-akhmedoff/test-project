@@ -15,13 +15,13 @@ type (
 	}
 
 	messages []message
-
-	Server struct {}
+	//Server - ...
+	Server struct{}
 )
 
 const (
 	letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	letters = 10
+	letters     = 10
 )
 
 func randStringBytes(n int) []byte {
@@ -59,10 +59,10 @@ func (s *Server) GenerateAndSend(ctx context.Context, message *genproto.GSReques
 	for i := range messageBunch {
 		body := messageBunch[i].text
 		err := ch.Publish(
-			"tg",                   // exchange
+			"tg",             // exchange
 			message.Priority, // routing key
-			false,                  // mandatory
-			false,                  // immediate
+			false,            // mandatory
+			false,            // immediate
 			amqp.Publishing{
 				ContentType: "text/plain",
 				Body:        body,

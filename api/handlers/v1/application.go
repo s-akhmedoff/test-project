@@ -7,12 +7,13 @@ import (
 	"test-project/utils"
 )
 
+//Send - ...
 func (h *Handler) Send(c *gin.Context) {
 	in := &genproto.GSRequest{}
 	err := c.ShouldBindJSON(in)
 	log.Print(in)
 	utils.FailOnError(err, "Failed to bind")
-	_, err = h.client.GenerateAndSend(c,in)
+	_, err = h.client.GenerateAndSend(c, in)
 	utils.FailOnError(err, "Failed to execute")
 	return
 }

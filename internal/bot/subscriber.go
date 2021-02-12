@@ -27,7 +27,7 @@ func main() {
 
 	qs := make(map[string]<-chan amqp.Delivery)
 
-	for _, p := range priorities{
+	for _, p := range priorities {
 		q, err := ch.QueueDeclare(
 			"",    // name
 			false, // durable
@@ -38,12 +38,11 @@ func main() {
 		)
 		utils.FailOnError(err, "Failed to declare a queue")
 
-
 		log.Printf("Binding queue %s to exchange %s with routing key %s", q.Name, "tg", p)
 		err = ch.QueueBind(
-			q.Name,       // queue name
-			p,            // routing key
-			"tg", // exchange
+			q.Name, // queue name
+			p,      // routing key
+			"tg",   // exchange
 			false,
 			nil)
 		utils.FailOnError(err, "Failed to bind a queue")
