@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  env_up:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -18,11 +18,20 @@ jobs:
       with:
         go-version: 1.15
 
+  build_api:
+    runs-on: ubuntu-latest
+    steps:
     - name: Build API
-      run: go build -v cmd/main.go
-
-    - name: Build Generator
-      run: go build -v internal/generator/server.go
+      run: make api_up
       
+  build_generator:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build Generator
+      run: make generator_api
+      
+  build_bot:
+    runs-on: ubuntu-latest
+    steps:
     - name: Build Bot
-      run: go build -v internal/bot/subscriber.go
+      run: make bot_api
