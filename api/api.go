@@ -2,9 +2,9 @@ package api
 
 import (
 	"google.golang.org/grpc"
-	"log"
 	_ "test-project/api/docs"
 	"test-project/api/genproto"
+	v1 "test-project/api/handlers/v1"
 	"test-project/utils"
 
 	"github.com/gin-gonic/gin"
@@ -22,15 +22,10 @@ func New() *gin.Engine {
 	conn, err := grpc.Dial(":9000", grpc.WithInsecure())
 	utils.FailOnError(err, "Failed to connect grpc")
 	service := genproto.NewGeneratorServiceClient(conn)
-	router.POST("/send", func(c *gin.Context){
-		in := &genproto.GSRequest{}
-		err := c.ShouldBindJSON(in)
-		log.Print(in)
-		utils.FailOnError(err, "Failed to bind")
-		_, err = service.GenerateAndSend(c, in)
-		utils.FailOnError(err, "Failed to execute")
-		return
-	})
+
+	handler := v1.New(service)
+
+	router.POST("/send", handler.Send)
 
 	return router
 }
