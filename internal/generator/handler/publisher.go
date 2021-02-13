@@ -2,11 +2,12 @@ package handler
 
 import (
 	"context"
-	"github.com/streadway/amqp"
 	"log"
 	"math/rand"
 	"test-project/internal/generator/genproto"
 	"test-project/utils"
+
+	"github.com/streadway/amqp"
 )
 
 type (

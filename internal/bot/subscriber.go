@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/streadway/amqp"
 	"log"
 	"test-project/utils"
 	"test-project/utils/tg"
 	"time"
+
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/streadway/amqp"
 )
 
 var priorities = []string{"low", "medium", "high"}
@@ -24,6 +25,8 @@ func main() {
 	defer ch.Close()
 
 	ch.ExchangeDeclare("tg", "topic", true, false, false, false, nil)
+
+	_ = ch.Qos(1, 0, false)
 
 	qs := make(map[string]<-chan amqp.Delivery)
 
@@ -70,38 +73,31 @@ func main() {
 			time.Sleep(time.Second)
 
 			select {
-			default:
-				current = nil
-				break
 			case msg := <-qs["high"]:
 				current = &msg
+			default:
+				current = nil
 			}
 			if current == nil {
 				select {
-				default:
-					current = nil
-					break
 				case msg := <-qs["medium"]:
 					current = &msg
+				default:
+					current = nil
 				}
 			}
 			if current == nil {
 				select {
+				case msg := <-qs["low"]:
+					current = &msg
 				default:
 					current = nil
 					break
-				case msg := <-qs["low"]:
-					current = &msg
 				}
 			}
 			if current != nil {
 				log.Print(current)
-				_, err := bot.Send(tgbotapi.NewMessage(int64(-1001332343159), string(current.Body)))
-				if err != nil {
-					current.Nack(false, true)
-				} else {
-					current.Ack(false)
-				}
+				bot.Send(tgbotapi.NewMessage(int64(-1001332343159), string(current.Body)))
 			}
 		}
 	}()
