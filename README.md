@@ -6,8 +6,8 @@ Server that sends n number of random messages to a telegram channel/group using 
 
 ## How to
 Makefile provides automated deploying
-1. go mod download
-2. make sure docker is running and no container of rabbitmq is running/stored
+1. make dep
+2. make sure docker is running
 3. make env_up
 4. make api_up
 5. make generator_up
